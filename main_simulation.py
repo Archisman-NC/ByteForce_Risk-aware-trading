@@ -69,7 +69,12 @@ def run_simulation():
         results.append(verdict)
         
     # Output
+    output_path = "server/data.json"
+    with open(output_path, "w") as f:
+        json.dump(results, f, indent=2)
+    
     print(json.dumps(results, indent=2))
+    print(f"\\n✅ Simulation data saved to {output_path}")
     return results
 
 if __name__ == "__main__":

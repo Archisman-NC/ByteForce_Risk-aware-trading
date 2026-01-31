@@ -1,14 +1,44 @@
-{
-  "timestamp": "2026-02-01T10:32:00Z",
-  "mode": "SIMULATION",
-  "market_regime": "VOLATILE",
-  "verdict": {
+[
+  {
+    "ticker": "RELIANCE.NS",
+    "timestamp": "2023-12-29T00:00:00",
     "action": "HOLD",
-    "confidence": 0.79
+    "confidence": 1.0,
+    "is_simulation": true,
+    "execution_allowed": false,
+    "consensus_score": 0.2727,
+    "disagreement_index": 0.3349,
+    "risk_level": "MEDIUM",
+    "regime": "CALM",
+    "regime_confidence": 1.0,
+    "reason": "Risk level MEDIUM prevents execution."
   },
-  "risk_level": "HIGH",
-  "consensus_score": -0.22,
-  "disagreement_index": 0.31,
-  "execution_allowed": false,
-  "reason": "Elevated volatility regime with high agent disagreement"
-}
+  {
+    "ticker": "TCS.NS",
+    "timestamp": "2023-12-29T00:00:00",
+    "action": "HOLD",
+    "confidence": 0.5,
+    "is_simulation": true,
+    "execution_allowed": false,
+    "consensus_score": -0.0544,
+    "disagreement_index": 0.479,
+    "risk_level": "HIGH",
+    "regime": "TRANSITION",
+    "regime_confidence": 0.5,
+    "reason": "Risk level HIGH prevents execution."
+  },
+  {
+    "ticker": "HDFCBANK.NS",
+    "timestamp": "2023-12-29T00:00:00",
+    "action": "HOLD",
+    "confidence": 0.5,
+    "is_simulation": true,
+    "execution_allowed": false,
+    "consensus_score": 0.115,
+    "disagreement_index": 0.4863,
+    "risk_level": "HIGH",
+    "regime": "TRANSITION",
+    "regime_confidence": 0.5,
+    "reason": "Risk level HIGH prevents execution."
+  }
+]
