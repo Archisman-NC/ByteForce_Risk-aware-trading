@@ -1,0 +1,15 @@
+{
+  "stock": "AAPL",
+  "timestamp": "2026-02-01T10:32:00Z",
+  "mode": "SIMULATION",
+  "market_regime": "VOLATILE",
+  "verdict": {
+    "action": "HOLD",
+    "confidence": 0.79
+  },
+  "risk_level": "HIGH",
+  "consensus_score": -0.22,
+  "disagreement_index": 0.31,
+  "execution_allowed": false,
+  "reason": "Elevated volatility regime with high agent disagreement"
+}
