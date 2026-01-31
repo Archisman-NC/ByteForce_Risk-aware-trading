@@ -15,12 +15,10 @@ def health():
 def chat_api():
   data = request.get_json()
   user_question = data.get('question')
-  
   if not user_question:
-    return jsonify({"error": "Missing 'question' field"}), 400
-  
+    return jsonify({"error": "Missing 'question' in request body"}), 400
   response = chat(user_question)
-  return {"response":jsonify(response)}, 200
+  return jsonify(response), 200
 
 if __name__ == '__main__':
   app.run(debug=True, port=5000)

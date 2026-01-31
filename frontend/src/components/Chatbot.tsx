@@ -9,7 +9,8 @@ interface Message {
 }
 
 interface BackendResponse {
-  response?: string | Array<{ text?: string } | string>;
+  answer?: string;
+  error?: string;
 }
 
 const Chatbot: React.FC = () => {
@@ -27,24 +28,11 @@ const Chatbot: React.FC = () => {
 
   // Helper function to parse backend response
   const parseResponse = (data: BackendResponse): string | string[] => {
-    if (!data.response) return 'I could not process your request. Please try again.';
-
-    // If response is a string, return as is
-    if (typeof data.response === 'string') {
-      return data.response;
+    if (data.answer) {
+      return data.answer;
     }
-
-    // If response is an array, extract text from objects and strings
-    if (Array.isArray(data.response)) {
-      return data.response.map((item) => {
-        if (typeof item === 'string') {
-          return item;
-        }
-        if (typeof item === 'object' && item.text) {
-          return item.text;
-        }
-        return '';
-      }).filter((text) => text !== '');
+    if (data.error) {
+      return `Error: ${data.error}`;
     }
 
     return 'I could not process your request. Please try again.';

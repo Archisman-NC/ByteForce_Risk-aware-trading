@@ -46,34 +46,13 @@ agent_executor = AgentExecutor(agent=agent, tools=tools, verbose=True)
 # Main function
 def chat(user_message: str):
     result = agent_executor.invoke({"input": user_message})
+    return {
+        "response": result["output"]
+    }
 
-    # 1. Extract the raw output (checking both 'output' and 'response' keys)
-    raw = result.get("output") or result.get("response")
-    
-    if not raw:
-        return "I'm sorry, I couldn't process that request."
-
-    # 2. Handle cases where the output is a list (common with multi-part tool responses)
-    if isinstance(raw, list):
-        text_parts = []
-        for item in raw:
-            if isinstance(item, dict) and "text" in item:
-                text_parts.append(item["text"])
-            elif isinstance(item, str):
-                text_parts.append(item)
-        # Join the parts into one clean string
-        return "".join(text_parts).strip()
-
-    # 3. Handle the case where it's already a string
-    return str(raw).strip()
-
-# Test it out
-print(chat("Hello"))
-print(chat("should I buy apple today?"))
-
-# chat1 = chat("Hii")
+# chat1 = chat("should I buy Amazon stock today?")
 # print(chat1)
-# # {'response': ["Hello! I'm your AI stock analysis assistant. Please tell me which stock you'd like to know about, and I'll fetch the latest market analysis for you.\n"]}
-# chat2 = chat("Hii, can you tell me should I buy or sell Amazon's stock?")
-# print(chat2)
-# {'response': [{'type': 'text', 'text': 'Given the current **VOLATILE** market regime and a **HIGH** risk level, the recommendation is to **HOLD** Amazon stock. This verdict', 'extras': {'signature': 'CiQBcsjafKPGIH8n/kMZRnoNPWe8aywaAKCcW+TkFCBWnq1eyq8KbwFyyNp834WxVY6PKvqPH5GrxGGHCWvRWf1mNhR4eGEawb7XvFFUjhK9y4IWRufUNv6WxDYLHv5QtiLUqwrEQMoJeifHQ5o/wHHuxh8JkD0RliVyhpe4JAHoCoEubKi6QObKCtB/q91pr0J7Tz5cswq1AQFyyNp8iTn0+apgt0Dzu3nMDN2CQPZkP47VztO4Q88/lsAhTgC0cP0aF2qIMfuH99OkEAmMF+0X0KtlBUmXoBy+dZkuTyLTFnyUL5pyrYmJjaroW86p3/d1zVP98ItUQja7iOvq4bLfwBkm+UOwFw+Fwc4UUj0nM1uffPA+qF5vZ1y2vKN8z5TQrvEDdqWQ6bt6sXBNpha5GUrF+jwDWHsrKByotbpPrwsYldLwWVNzaDLOu3qX2XZCPe8S4c8nRBfwC61pUloesAB1NyF7cClnxypF/fYDQpDcATMAsD3Ihw5Yby8MDapERh05BiTL9PeMy9ToaTF99PDqGpeXiFqn/d7na2bYnBU+7f1a0hLiQjtuyxCvzV02exTDYBDBetbaFjbHGDUrDG+pa9yT7sTAI9dGsMjx+4pLqeIZs+dxtHzDs0qCcU5kmAPG0vQZrQ/Dq7P14ApWAXLI2nyecf7ubhlagAB6RuVpoW37bQa5l2WXWYN5ywS0eoqKEJMYT1DTIaAaI8qMUw/LqdFBmV8gq1z++W3ImgoiBPFSXlsrLNnLkbdV7Dt8I1IB+e0='}, 'index': 0}, ' comes with a high confidence level of 79%, primarily due to elevated volatility and significant disagreement among market participants.'
+{'response': [{'type': 'text', 'text': 'Given the current **VOLATILE** market regime and **HIGH** risk level, it is recommended to **HOLD**', 'extras': {'signature': 'CmoBcsjafIIrajoz21XGF2mKgW+gCUFft4iqwlrY7qJeDk1Pme5M7RzTHyy1DS9oQ/AEd6ox8MZp18WwboifO5tebF9oBNfw/DdnLbbOgfeiuvwWsFlzqPg+znJfcR+aGeed4ld9a8LRAz/wCsgBAXLI2nwiPPbFiVl4CR31kPR07fshvTRey4wbI0Lz9p09dipe82z8ChPUciTrlZPIsSOsDDzVtBYFJf8CBFl583lcBJx57CIdZl14YU+x9owpB6Djie0QwQP8fim/HMkbdQHF+HKCtN09yJl/brP8JvmF3Wmmh0KT6g/iuZf+kedZR7y5kIfxfsZH1dZ8NiVfG5EzMXL9xdBfUE83bHLray3OXlI/PGVKYZbIqfFcTE5YpXwcYkf/cNoxwW0yr5oFp2INc1duQOcKhgIBcsjafN+gPIn6rC7/2+QwRZVSvE/lALBGhsu5G4E+K9QqURnDo9Ieefoe2vDDXCvosDLZe/rIJgtOqKwVXFAzPr1J/5OehB90GxmuzZisCGDYuYuEH2aKJOhwzTEwAoxIBeFeEe/SrHfSWz80oT4TXr98R7+alFCHq1Lv7iYe7PIzYUoa7zCt/qNmBy7b5tNkaoxiND4LoDCnrh93YT4Gts+UxqnMUZPOFvpZOO6gd623LVbiOyZ21af8XQ3Y1d4K7Y4am4FHAYPWoFc8T7uM03zKHmusWmpHHJ3lTa2WINuncaAa1BerkiLZufA9snDar0yn5RMDvHszIOAm7L5sb3Jn5jaNCp4BAXLI2nzEKfjMR1KtgAuT8xehnjOzGDUE1Grd/VJiehjAHt5SN9d0D7JBDCU5vkRVqzlDk2CNZ0Ucn/yVoh+QeOeB1LKmRmbZ9KJqVWkE9/lqpC7yMCkcxX02an49YP6h5j8Mjl4iAE/hCgpu/ZrEU8ll+K/T6/9q/Q3TXHGVDS++bnEjEMtkGJTjMgvTn/FSqN4AbnE6nANKsVMbLQU='}, 'index': 0}, ' Amazon stock. The confidence level for this verdict is 79%. The primary reason for this recommendation is the elevated volatility in the market and significant disagreement among agents, leading to the decision that execution is not currently allowed.']}
+
+chat1 = chat("Can i buy an amazon stock today")
+print(chat1[1])
