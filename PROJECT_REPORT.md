@@ -60,6 +60,23 @@ python3 main_simulation.py
 ```
 *Outputs the final JSON verdict for all tickers.*
 
+## System Verification
+
+### 1. Core Simulation Verification
+Run the verification suite to check all 20 architectural constraints:
+```bash
+python3 verify_setup.py
+```
+**Status**: ✅ Verified. All constraints (Agent count, deterministic logic, risk overrides) are intact.
+
+### 2. Integration Verification
+Tested the full backend flow (Frontend API -> Server -> Agent):
+1. Started Server: `python3 server/main.py`
+2. Sent API Request: `POST /api/chat`
+3. Received Agent Response: ✅ Success.
+
+**Status**: ✅ Working.
+
 ### Verify System
 ```bash
 python3 verify_setup.py
